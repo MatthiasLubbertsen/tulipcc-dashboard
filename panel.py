@@ -18,11 +18,11 @@ def webhook(label):
         error = str(e)
         print(f"Error sending webhook: {error}")
 
-def button_cb(evt):
-    if evt.code == lv.EVENT.CLICKED:
-        btn = evt.get_target_obj()
-        label = btn.get_child(0).get_text()
-        webhook(label)
+def button_cb(label):
+    def cb(evt):
+        if evt.code == lv.EVENT.CLICKED:
+            webhook(label)
+    return cb
 
 def update_time_cb(time_label, timer):
     rtc = machine.RTC()
@@ -74,9 +74,9 @@ def run(screen):
     lv.timer_create(lambda timer: update_time_cb(time_label, timer), 1000, None)
     
 
-    screen.add(tulip.UIButton("lamp aan/uit", fg_color=255, bg_color=200, callback=button_cb, w=200, h=100,font=lv.font_montserrat_24),x=175, y=450)
-    screen.add(tulip.UIButton("alles uit", fg_color=255, bg_color=200, callback=button_cb),x=300, y=350)
-    screen.add(tulip.UIButton("huiswerk", fg_color=255, bg_color=200, callback=button_cb),x=400, y=350)
+    screen.add(tulip.UIButton("lamp aan/uit", fg_color=255, bg_color=200, callback=button_cb("lamp aan/uit"), w=200, h=100,font=lv.font_montserrat_24),x=175, y=450)
+    screen.add(tulip.UIButton("alles uit", fg_color=255, bg_color=200, callback=button_cb("alles uit")),x=300, y=350)
+    screen.add(tulip.UIButton("huiswerk", fg_color=255, bg_color=200, callback=button_cb("huiswerk")),x=400, y=350)
 
     
 
