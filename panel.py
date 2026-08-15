@@ -27,7 +27,7 @@ def button_cb(label):
 def update_time_cb(time_label, timer):
     rtc = machine.RTC()
     now = rtc.datetime()
-    time_label.obj.set_text(f"{now[4]:02d}:{now[5]:02d}:{now[6]:02d}")
+    time_label.label.set_text(f"{now[4]:02d}:{now[5]:02d}:{now[6]:02d}")
 
 def clock():
     url = "https://world-time-api3.p.rapidapi.com/timezone/Europe/Amsterdam"
