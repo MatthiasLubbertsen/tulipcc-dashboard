@@ -4,7 +4,7 @@ I wrote a little python script that has 3 buttons to control stuff about my Home
 It also has a clock and it has a little greeting.
 
 ## demo
-{{video link here}}
+[see a demo here](https://cdn.hackclub.com/01a0a12f-b8f0-757f-9b0b-0c9bbaba5794/VID20260914202708.mp4)
 
 ## how
 - webhook: edit the webhooks in the script to your own ha webhooks, it'll send a post request to the webhook when you click the button
