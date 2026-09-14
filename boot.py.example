@@ -1,0 +1,15 @@
+import tulip
+import network
+import time
+
+world.username='Matthias'
+
+WIFI_SSID = "your_buetiful_wifi"
+WIFI_PASS = "your_amazing_password"
+TIMEOUT_S = 15   # maximum wait for wifi (seconds)
+
+tulip.wifi("your_buetiful_wifi", "your_amazing_password")
+
+run("panel")
+
+tulip.touch_delta(5,-3,0.800000)
