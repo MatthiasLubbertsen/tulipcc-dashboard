@@ -3,6 +3,7 @@ import lvgl as lv
 import requests
 import machine
 
+# webhook stuff
 WEBHOOK_URLS = {
     "lamp aan/uit": "http://homeassistant.local:8123/api/webhook/-Q_FOvAWzpGNMYOEoU24iaIxL",
     "alles uit": "http://homeassistant.local:8123/api/webhook/-h8EgXtgZ55psC0-Ti_6-B_FL",
@@ -17,12 +18,6 @@ def webhook(label):
     except Exception as e:
         error = str(e)
         print(f"Error sending webhook: {error}")
-
-def button_cb(label):
-    def cb(evt):
-        if evt.code == lv.EVENT.CLICKED:
-            webhook(label)
-    return cb
 
 def update_time_cb(time_label, timer):
     rtc = machine.RTC()
@@ -59,13 +54,23 @@ def clock():
     time_label = f"{now[4]:02d}:{now[5]:02d}:{now[6]:02d}"
     return time_label
 
+# end of da webhook logic
+
+def button_cb(label):
+    def cb(*args, **kwargs): # AI found this out, but it means 'I love everything now'
+        webhook(label)
+    return cb
+
 def run(screen):
-    # setup
+    # setup 
     screen.bg_color = 0
     screen.offset_y = 100
 
     screen.group.set_style_text_font(lv.font_montserrat_12,0)
     screen.add(tulip.UILabel("hai matthias, welcome back :)", font=lv.font_montserrat_24, w=600), x=125, y=100)
+
+# webhookie
+
     time_text = clock()
     time_label = tulip.UILabel(time_text if time_text else "--:--:--", font=lv.font_montserrat_36, w=600)
     screen.add(time_label, x=175, y=250)
@@ -73,12 +78,11 @@ def run(screen):
     # Update time every second
     lv.timer_create(lambda timer: update_time_cb(time_label, timer), 1000, None)
     
+# end of da webhook
 
-    screen.add(tulip.UIButton("lamp aan/uit", fg_color=255, bg_color=200, callback=button_cb("lamp aan/uit"), w=200, h=100,font=lv.font_montserrat_24),x=175, y=450)
-    screen.add(tulip.UIButton("alles uit", fg_color=255, bg_color=200, callback=button_cb("alles uit")),x=300, y=350)
-    screen.add(tulip.UIButton("huiswerk", fg_color=255, bg_color=200, callback=button_cb("huiswerk")),x=400, y=350)
+    screen.add(tulip.UIButton("lamp aan/uit", fg_color=0, bg_color=178, callback=button_cb("lamp aan/uit"), w=200, h=100,font=lv.font_montserrat_24),x=175, y=450)
+    screen.add(tulip.UIButton("alles uit", fg_color=255, bg_color=178, callback=button_cb("alles uit")),x=300, y=350)
+    screen.add(tulip.UIButton("huiswerk", fg_color=255, bg_color=178, callback=button_cb("huiswerk")),x=400, y=350)
 
-    
 
     screen.present() # we are ready
-
